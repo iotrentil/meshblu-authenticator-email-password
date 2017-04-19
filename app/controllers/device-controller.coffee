@@ -7,7 +7,7 @@ class DeviceController
   constructor: ({@meshbluHttp, @deviceModel}) ->
 
   prepare: (request, response, next) =>
-    {email,password} = request.body
+    {email,password,firstName,lastName} = request.body
     return response.status(422).send 'Password required' if _.isEmpty(password)
     return response.status(422).send 'Invalid email' unless validator.isEmail(email)
 
@@ -18,17 +18,25 @@ class DeviceController
     request.email = email
     request.password = password
     request.deviceQuery = query
+    request.firstName = firstName
+    request.lastName = lastName
 
     next()
 
   create: (request, response) =>
-    {deviceQuery, email, password} = request
+    {deviceQuery, email, password, firstName, lastName} = request
     debug 'device query', deviceQuery
 
     @deviceModel.create
       query: deviceQuery
       data:
-        type: 'octoblu:user'
+        type: 'account:user'
+        id: email
+        lastLogin: ''
+        profile:
+          image: ''
+          firstName: firstName
+          lastName: lastName
       user_id: email
       secret: password
     , @reply(request.body.callbackUrl, response)
