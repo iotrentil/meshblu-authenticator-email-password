@@ -11,8 +11,8 @@ class Routes
     @forgotPasswordModel      = new ForgotPasswordModel
       uuid: deviceModel.authenticatorUuid
       mailgunKey: process.env.MAILGUN_API_KEY
-      mailgunDomain: process.env.MAILGUN_DOMAIN || 'octoblu.com'
-      passwordResetUrl: process.env.PASSWORD_RESET_URL
+      mailgunDomain: process.env.MAILGUN_DOMAIN || 'mail.byclip.com'
+      passwordResetUrl: process.env.PASSWORD_RESET_URL || 'http://none.none.com'
       meshbluHttp: meshbluHttp
 
     @forgotPasswordController = new ForgotPasswordController {@forgotPasswordModel}

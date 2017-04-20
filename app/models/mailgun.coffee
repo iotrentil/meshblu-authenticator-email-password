@@ -2,7 +2,7 @@ request = require 'request'
 
 class Mailgun
   constructor: (@apiKey, @domain) ->
-    @baseUrl = "https://api.mailgun.net/v2/#{@domain}"
+    @baseUrl = "https://api.mailgun.net/v3/#{@domain}"
 
   sendHtml : (from, to, subject, body, callback=->) =>
     request.post(

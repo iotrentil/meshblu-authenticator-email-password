@@ -10,7 +10,7 @@ class ForgotPasswordController
         return response.status(401).send('Cannot write to this device') if error.message == 'unauthorized'
         return response.status(500).send(error.message)
 
-      return response.send(201)
+      return response.status(201).send(data)
 
   reset: (request, response) =>
     {device,token,password} = request.body

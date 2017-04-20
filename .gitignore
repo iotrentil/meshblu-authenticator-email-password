@@ -32,3 +32,6 @@ meshblu.json
 # dev files
 .*-dev
 .nyc_output
+
+#dotenv
+.env

@@ -39,11 +39,12 @@ class ForgotPasswordModel
           uriParams.query.email = email
           uri = url.format uriParams
 
-          body = "You recently made a request to reset your password, click <a href=\"#{uri}\">here</a> to reset your password. If you didn't make this request please ignore this e-mail"
+          #body = "You recently made a request to reset your password, click <a href=\"#{uri}\">here</a> to reset your password. If you didn't make this request please ignore this e-mail"
+          body = "You recently made a request to reset your password, go to the reset password menu at Rentil app and put \"#{resetToken}\". If you didn't make this request please ignore this e-mail"
           debug 'email:', body
 
           @mailgun.sendHtml(
-            'no-reply@login-email.octoblu.com'
+            'no-reply@mail.byclip.com'
             email
             'Reset Password'
             body
