@@ -1,5 +1,6 @@
 .git
 .kubernetes
+.env
 node_modules
 coverage
 test
