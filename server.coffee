@@ -1,3 +1,5 @@
+require('dotenv').config { silent: true }
+
 express            = require 'express'
 morgan             = require 'morgan'
 bodyParser         = require 'body-parser'
