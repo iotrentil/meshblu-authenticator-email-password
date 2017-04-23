@@ -39,7 +39,7 @@ class DeviceController
           lastName: lastName
       user_id: email
       secret: password
-    , @reply(request.body.callbackUrl, response)
+    , @reply(request.body.callbackUrl, response, created : true)
 
   update: (request, response) =>
     {deviceQuery, email, password} = request
@@ -52,9 +52,9 @@ class DeviceController
       uuid: uuid
       user_id: email
       secret: password
-    , @reply(request.body.callbackUrl, response)
+    , @reply(request.body.callbackUrl, response, created : false)
 
-  reply: (callbackUrl, response) =>
+  reply: (callbackUrl, response, created) =>
     (error, device) =>
       if error?
         debug 'got an error', error.message
@@ -65,6 +65,18 @@ class DeviceController
           return response.status(401).json error: "Unable to find user"
 
         return response.status(500).json error: error.message
+
+      if created
+        messageReceived = {subscriberUuid: device.uuid, emitterUuid: device.uuid, type: 'message.received'}
+        broadcastReceived = {subscriberUuid: device.uuid, emitterUuid: device.uuid, type: 'broadcast.received'}
+        @meshbluHttp.createSubscription messageReceived, (error) =>
+          if error?
+            @meshbluHttp.unregister device.uuid (error) => {}
+            return response.sendError error if error?
+          @meshbluHttp.createSubscription broadcastReceived, (error) =>
+            if error?
+              @meshbluHttp.unregister device.uuid (error) => {}
+              return response.sendError error if error?
 
       @meshbluHttp.generateAndStoreToken device.uuid, (error, device) =>
         return response.status(201).send(device: device) unless callbackUrl?
