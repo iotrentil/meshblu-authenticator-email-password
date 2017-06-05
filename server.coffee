@@ -24,6 +24,7 @@ catch
 meshbluJSON.name = process.env.EMAIL_PASSWORD_AUTHENTICATOR_NAME ? 'Email Authenticator'
 
 port = process.env.EMAIL_PASSWORD_AUTHENTICATOR_PORT ? process.env.PORT ? 80
+forwarderUrl = process.env.FORWARDER_URL
 
 octobluRaven = new OctobluRaven()
 octobluRaven.patchGlobal()
@@ -62,7 +63,7 @@ meshbluHttp.device meshbluJSON.uuid, (error, device) ->
   app.listen port, =>
     console.log "listening at localhost:#{port}"
 
-routes = new Routes {app, meshbluHttp, deviceModel}
+routes = new Routes {app, meshbluHttp, deviceModel, forwarderUrl}
 routes.register()
 
 

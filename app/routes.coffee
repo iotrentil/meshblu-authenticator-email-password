@@ -6,8 +6,8 @@ ForgotPasswordModel      = require './models/forgot-password-model'
 SessionController        = require './controllers/session-controller'
 
 class Routes
-  constructor: ({@app, deviceModel, meshbluHttp}) ->
-    @deviceController         = new DeviceController {meshbluHttp, deviceModel}
+  constructor: ({@app, deviceModel, meshbluHttp, forwarderUrl}) ->
+    @deviceController         = new DeviceController {meshbluHttp, deviceModel, forwarderUrl}
     @forgotPasswordModel      = new ForgotPasswordModel
       uuid: deviceModel.authenticatorUuid
       mailgunKey: process.env.MAILGUN_API_KEY
