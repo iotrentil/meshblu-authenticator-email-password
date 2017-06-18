@@ -16,9 +16,10 @@ try
   meshbluJSON  = require './meshblu.json'
 catch
   meshbluJSON =
-    uuid:   process.env.EMAIL_PASSWORD_AUTHENTICATOR_UUID
-    token:  process.env.EMAIL_PASSWORD_AUTHENTICATOR_TOKEN
-    server: process.env.MESHBLU_HOST
+    uuid:   process.env.MESHBLU_UUID
+    token:  process.env.MESHBLU_TOKEN
+    protocol: process.env.MESHBLU_PROTOCOL
+    hostname: process.env.MESHBLU_HOSTNAME
     port:   process.env.MESHBLU_PORT
 
 meshbluJSON.name = process.env.EMAIL_PASSWORD_AUTHENTICATOR_NAME ? 'Email Authenticator'
